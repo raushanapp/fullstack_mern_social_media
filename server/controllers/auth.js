@@ -4,9 +4,9 @@ import User from "../models/user.js";
 
 
 // post register  
-export const register = async (req,res) => {
+export const register = async (req, res) => {
     try {
-        const { 
+        const {
             firstName,
             lastName,
             email,
@@ -35,6 +35,32 @@ export const register = async (req,res) => {
         res.status(201).json({
             success: true,
             saveUser
+        })
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            error: error.message
+        })
+    }
+};
+
+// login in
+
+export const login = async (req, res) => {
+    const { email, password } = req.body;
+    try {
+        const user = await User.findOne({ email: email }).lean().exec();
+        if (!user) return res.status(400).json({ success: false, message: "Users does not exist. " });
+
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) return res.status(400).json({ success: false, message: "Invalid credentials. " });
+
+        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+        delete user.password;
+        res.status(200).json({
+            success: true,
+            token,
+            user
         })
     } catch (error) {
         res.status(500).json({

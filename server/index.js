@@ -9,8 +9,8 @@ import {fileURLToPath}  from "url";
 import dotenv from"dotenv"
 import connectDB from "./config/db.js";
 import { register } from "./controllers/auth.js";
-// import router from "./src/routes/users.routes.js";
-
+import atuhRoutes from "./routes/auth.routes.js"
+import userRoutes from "./routes/user.routes.js";
 // configruation
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -39,12 +39,15 @@ const storage = multer.diskStorage({
     }
 });
 const upload = multer({ storage });
-console.log(upload);
+// console.log(upload);
 
-// routes
+// routes with files
 
 app.post("/auth/api/register",upload.single("picture"),register)
 
+// routes
+app.use("/auth", atuhRoutes);
+app.use("/users", userRoutes);
 
 // port number
 const PORT = process.env.PORT || 2200;
