@@ -9,8 +9,17 @@ import {fileURLToPath}  from "url";
 import dotenv from"dotenv"
 import connectDB from "./config/db.js";
 import { register } from "./controllers/auth.js";
-import atuhRoutes from "./routes/auth.routes.js"
+import { createPost } from "./controllers/posts.js";
+import atuhRoutes from "./routes/auth.routes.js";
 import userRoutes from "./routes/user.routes.js";
+import postRoutes from "./routes/post.routes.js";
+import { verifyToken } from "./middleware/authorize.js";
+
+// do not comment out 
+// import User from "./models/user.js";
+// import Post from "./models/post.js";
+// import{users,posts} from "./data/index.js"
+
 // configruation
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -43,11 +52,13 @@ const upload = multer({ storage });
 
 // routes with files
 
-app.post("/auth/api/register",upload.single("picture"),register)
+app.post("/auth/api/register", upload.single("picture"), register);
+app.post("/posts", verifyToken, upload.single("picture"), createPost);
 
 // routes
 app.use("/auth", atuhRoutes);
 app.use("/users", userRoutes);
+app.use("/posts",postRoutes)
 
 // port number
 const PORT = process.env.PORT || 2200;
@@ -59,6 +70,10 @@ app.listen(PORT, async () => {
         await connectDB();
         console.log(`Server running port ${PORT}`);
         console.log("database connected")
+
+        // this data insert one time please do not uncomment again
+        // User.insertMany(users);
+        // Post.insertMany(posts);
     } catch (error) {
         console.log(error.message);
     }
