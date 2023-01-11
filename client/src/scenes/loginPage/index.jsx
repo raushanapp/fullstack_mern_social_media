@@ -1,4 +1,5 @@
 import {Box,Typography,useTheme,useMediaQuery} from "@mui/material"
+import { Form } from "./Form";
 export const LoginPage = () => {
     const theme = useTheme();
     const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
@@ -32,6 +33,7 @@ export const LoginPage = () => {
             >
                 Welcome to SocialMedia, the Social Media for Sociopath! 
            </Typography>
+            <Form/>
         </Box>
     </Box>
     

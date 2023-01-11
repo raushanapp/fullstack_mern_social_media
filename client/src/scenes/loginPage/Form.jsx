@@ -7,7 +7,7 @@ import {
     Typography,
     useTheme
 } from "@mui/material";
-import EditOutLinedIcon from "@mui/icons-material/EditOutLined";
+import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import * as yup from "yup";
 import { Formik } from "formik";
 import { useNavigate } from "react-router-dom";
@@ -55,8 +55,54 @@ export const Form = () => {
     const isLogin = pageType === "login";
     const isRegister = pageType === "register";
 
+    const register = async (values, onSubmitProps) => {
+        // this allow us to send form with image
+        const formData = new FormData();
+        for (let value in values) {
+            formData.append(value, values[value]);
+        }
+        formData.append("picturePath", values.picture.name);
+
+        const saveduserResponse = await fetch(
+            "http://localhost:2100/auth/api/register",
+            {
+                method: "POST",
+                body: formData
+            }
+        );
+        const savedUser = await saveduserResponse.json();
+        onSubmitProps.resetForm();
+        if (savedUser) {
+            setPageType("login")
+        }
+    };
+
+    const login = async (values, onSubmitProps) => {
+        const loggedInResponse = await fetch(
+            "http://localhost:2100/auth/login",
+            {
+                method: "POST",
+                headers:{"Content-Type":"application/json"},
+                body: JSON.stringify(values)
+            }
+        );
+        const loggedIn = await loggedInResponse.json();
+        onSubmitProps.resetForm();
+        if (loggedIn) {
+            dispatch(setLogin
+                ({
+                user: loggedIn.user,
+                token: loggedIn.token,
+            })
+            );
+            navigate("/home");
+        }
+    }
     // handling from 
-    const handleFormSubmit = async (value, onSubmitProps) => { };
+    const handleFormSubmit = async (values, onSubmitProps) => {
+        if (isLogin) await login(values, onSubmitProps);
+        if (isRegister) await register(values, onSubmitProps);
+    };
     return (
         <Formik
             onSubmit={handleFormSubmit}
@@ -78,9 +124,9 @@ export const Form = () => {
                     <Box
                         display='grid'
                         gap='30px'
-                        gridTemplateColumns="repeat(4 ,minmax(0,1fr))"
+                        gridTemplateColumns="repeat(4 ,minmax(0, 1fr))"
                         sx={{
-                            "& > div":{gridColumn:isNonMobile?undefined:"span 4"},
+                            "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
                         }}
                     >
                         {isRegister && (
@@ -97,7 +143,7 @@ export const Form = () => {
                                 />
 
                                 <TextField
-                                    label='last Name'
+                                    label='Last Name'
                                     onBlur={handleBlur}
                                     onChange={handleChange}
                                     value={values.lastName}
@@ -114,17 +160,17 @@ export const Form = () => {
                                     name="location"
                                     error={Boolean(touched.location) && Boolean(errors.location)}
                                     helperText={touched.location && errors.location}
-                                    sx={{gridColumn:"span 2"}}
+                                    sx={{gridColumn:"span 4"}}
                                 />
                                 <TextField
                                     label='Occupation'
                                     onBlur={handleBlur}
                                     onChange={handleChange}
-                                    value={values.lastName}
-                                    name="lastName"
-                                    error={Boolean(touched.lastName) && Boolean(errors.lastName)}
-                                    helperText={touched.lastName && errors.lastName}
-                                    sx={{gridColumn:"span 2"}}
+                                    value={values.occupation}
+                                    name="occupation"
+                                    error={Boolean(touched.occupation) && Boolean(errors.occupation)}
+                                    helperText={touched.occupation && errors.occupation}
+                                    sx={{gridColumn:"span 4"}}
                                 />
                                 {/* picture dropzone box */}
                                 <Box
@@ -143,7 +189,7 @@ export const Form = () => {
                                         {({ getRootProps, getInputProps }) => (
                                             <Box
                                                 {...getRootProps()}
-                                                border={`2px dashed ${palette.neutral.amin}`}
+                                                border={`2px dashed ${palette.primary.main}`}
                                                 p='1rem'
                                                 sx={{ "$:hover": { cursor: "pinter" } }}
                                             >
@@ -153,7 +199,7 @@ export const Form = () => {
                                                 ) :(
                                                     <FlexBetween>
                                                         <Typography>{values.picture.name}</Typography>  
-                                                        <EditOutLinedIcon/>
+                                                        <EditOutlinedIcon/>
                                                     </FlexBetween>
                                                 )}
                                             </Box>
@@ -170,7 +216,7 @@ export const Form = () => {
                             name="email"
                             error={Boolean(touched.email) && Boolean(errors.email)}
                             helperText={touched.email && errors.email}
-                            sx={{gridColumn:"span 2"}}
+                            sx={{gridColumn:"span 4"}}
                         />
                         <TextField
                             label='Password'
@@ -181,9 +227,10 @@ export const Form = () => {
                             name="password"
                             error={Boolean(touched.password) && Boolean(errors.password)}
                             helperText={touched.password && errors.password}
-                            sx={{gridColumn:"span 2"}}
+                            sx={{gridColumn:"span 4"}}
                         />
                     </Box>
+                     
                     {/* Button register or login */}
                     <Box
                     >
@@ -191,7 +238,7 @@ export const Form = () => {
                             fullWidth
                             type="submit"
                             sx={{
-                                m: "2rem",
+                                m: "2rem 0",
                                 p: "1rem",
                                 backgroundColor: palette.primary.main,
                                 color: palette.background.alt,
