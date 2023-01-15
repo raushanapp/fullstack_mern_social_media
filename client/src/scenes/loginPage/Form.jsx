@@ -204,7 +204,7 @@ export const Form = () => {
                                                 )}
                                             </Box>
                                         )}
-                                  </Dropzone>
+                                    </Dropzone>
                                 </Box>
                             </>
                         )}
