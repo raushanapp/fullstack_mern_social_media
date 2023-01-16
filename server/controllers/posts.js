@@ -37,10 +37,10 @@ export const createPost = async (req, res) => {
 
 export const getFeedPosts = async (req, res) => {
     try {
-        const post = await Post.find().lean().exec();
+        const posts = await Post.find().lean().exec();
         res.status(200).json({
             success: true,
-            post: post
+            posts: posts
         });
     } catch (error) {
         res.status(404).json({

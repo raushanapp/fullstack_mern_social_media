@@ -40,7 +40,6 @@ export const MyPostWidget = ({picturePath}) => {
     const medium = palette.neutral.medium;
 
     const handlePost = async () => {
-        
         const formData = new FormData();
         formData.append("userId", _id);
         formData.append("description", post);
@@ -48,7 +47,6 @@ export const MyPostWidget = ({picturePath}) => {
             formData.append("picture", image);
             formData.append("picturePath", image.name);
         }
-        
         try {
             const responce = await fetch(`http://localhost:2100/posts`, {
                 method: "POST",
@@ -58,6 +56,7 @@ export const MyPostWidget = ({picturePath}) => {
                 body: formData
             });
             const posts = await responce.json();
+            console.log(posts)
             const post = posts.post;
             dispatch(setPosts({ post }));
             setImage(null);
@@ -70,7 +69,7 @@ export const MyPostWidget = ({picturePath}) => {
     return (
         <WidgetsWrapper>
             <FlexBetween gap='1.5rem'>
-                <UserImage src={picturePath} />
+                <UserImage image={picturePath} />
                 <InputBase
                     placeholder="What's on your mind...."
                     onChange={(e) => setPost(e.target.value)}
@@ -152,9 +151,36 @@ export const MyPostWidget = ({picturePath}) => {
 
                 {isNonMobileScreens ? (
                     <>
-                        
+                        <FlexBetween gap='0.25rem'>
+                            <GifBoxOutlined sx={{ color: mediumMain }} />
+                            <Typography color={mediumMain}>Clip</Typography>
+                        </FlexBetween>
+                        <FlexBetween gap='0.25rem'>
+                            <AttachFileOutlined sx={{ color: mediumMain }} />
+                            <Typography color={mediumMain}>Attachment</Typography>
+                        </FlexBetween>
+                        <FlexBetween gap='0.25rem'>
+                            <MicOutlined sx={{ color: mediumMain }} />
+                            <Typography color={mediumMain}>Audio</Typography>
+                        </FlexBetween>
+                       
                     </>
-                ):  <></>   }
+                ) : (<FlexBetween gap='0.25rem'>
+                        <MoreHorizOutlined sx={{ color: mediumMain }} />
+                    </FlexBetween>
+                )}
+
+                <Button
+                    disabled={!post}
+                    onClick={handlePost}
+                    sx={{
+                        color: palette.background.alt,
+                        backgroundColor: palette.primary.main,
+                        borderRadius:"3rem"
+                    }}
+                >
+                    POST
+                </Button>
             </FlexBetween>
         </WidgetsWrapper>
     )
