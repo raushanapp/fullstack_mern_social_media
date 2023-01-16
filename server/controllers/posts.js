@@ -27,7 +27,7 @@ export const createPost = async (req, res) => {
         })
     } catch (error) {
         res.status(409).json({
-            success: true,
+            success: false,
             error: error.message
         });
     }
@@ -44,7 +44,7 @@ export const getFeedPosts = async (req, res) => {
         });
     } catch (error) {
         res.status(404).json({
-            success: true,
+            success: false,
             error: error.message
         });
     }
@@ -60,7 +60,7 @@ export const getUserPosts = async (req, res) => {
         });
     } catch (error) {
         res.status(404).json({
-            success: true,
+            success: false,
             error: error.message
         });
     }
@@ -88,7 +88,7 @@ export const likePosts = async (req, res) => {
         });
     } catch (error) {
         res.status(404).json({
-            success: true,
+            success: false,
             error: error.message
         }); 
     }

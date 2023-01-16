@@ -22,8 +22,10 @@ export const Friend = ({friendId,name,subtitle,userPicturePath}) => {
     const primaryDark = palette.primary.dark;
     const main = palette.neutral.main;
     const medium = palette.neutral.medium;
-
-    const isFriend = friends.find((friend) => friend._id === friendId);
+     
+    console.log("friendId...", friendId);
+    const isFriend = friends?.find((friend) => friend._id === friendId);
+    console.log(isFriend,"friend id----")
 
     const patchFriend = async () => {
         try {
@@ -36,8 +38,9 @@ export const Friend = ({friendId,name,subtitle,userPicturePath}) => {
             });
 
             const data = await responce.json();
-            const friends = data.friends;
-            dispatch(setFriends({ friends }));
+            const friend = data.friends;
+            console.log(friend,"friend");
+            dispatch(setFriends({ friends:friend }));
             
         } catch (err) {
             console.log({ err: err.message })
@@ -47,7 +50,7 @@ export const Friend = ({friendId,name,subtitle,userPicturePath}) => {
     return (
         <FlexBetween>
             <FlexBetween gap='1rem'>
-                <UserImage image={userPicturePath} />
+                <UserImage image={userPicturePath} size='55px' />
                 <Box
                     onClick={() => {
                         navigate(`/profile/${friendId}`);

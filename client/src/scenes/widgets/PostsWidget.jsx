@@ -11,15 +11,16 @@ export const PostsWidget = ({ userId, isProfile = false }) => {
 
     const getPosts = async () => {
         try {
-            const responce = await fetch(`http://localhost:2100/posts`, {
+            const responce = await fetch('http://localhost:2100/posts', {
                 method: "GET",
                 headers: {
                     Authorization: `Bearer ${token}`
                 },
             });
             let data = await responce.json();
-            const posts = data.posts;
-            dispatch(setPosts({ posts }));
+            console.log("post get ",data)
+            const post = data.posts;
+            dispatch(setPosts({ posts:post }));
         } catch (err) {
             console.log({ err: err.message });
         }
@@ -34,8 +35,9 @@ export const PostsWidget = ({ userId, isProfile = false }) => {
                 },
             });
             let data = await responce.json();
-            const posts = data.post;
-            dispatch(setPosts({ posts }));
+            const post = data.post;
+            console.log("user post ",posts)
+            dispatch(setPosts({ posts:post }));
         } catch (err) {
             console.log({ err: err.message });
         }
@@ -47,7 +49,8 @@ export const PostsWidget = ({ userId, isProfile = false }) => {
         else {
             getPosts()
         }
-    }, []);//esLint-disable-line react-hooks/exhaustive-deps
+    }, []);//esLint-disable-line react-hooks/exhaustive-deps;
+    console.log("user post-",posts)
 
     return (
         <>
@@ -59,9 +62,8 @@ export const PostsWidget = ({ userId, isProfile = false }) => {
                     lastName,
                     description,
                     location,
-                    occupation,
                     picturePath,
-                    userPicutrePath,
+                    userPicturePath,
                     likes,
                     comments
                 }) => (
@@ -72,8 +74,8 @@ export const PostsWidget = ({ userId, isProfile = false }) => {
                         name={`${firstName} ${lastName}`}
                         description={description}
                         location={location}
-                        picturePath={picturePath={}}
-                        userPicutrePath={userPicutrePath={}}
+                        picturePath={picturePath}
+                        userPicturePath={userPicturePath}
                         likes={likes}
                         comments={comments}
                     />

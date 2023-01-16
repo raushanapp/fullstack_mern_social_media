@@ -1,7 +1,8 @@
 import {
     ChatBubbleOutlineOutlined,
-    FavoriteBorderOutlines,
+    FavoriteBorderOutlined,
     FavoriteOutlined,
+    ShareLocationOutlined,
     ShareOutlined
 } from "@mui/icons-material";
 
@@ -21,19 +22,22 @@ export const PostWidget = ({
     description,
     location,
     picturePath,
+    userPicturePath,
     likes,
     comments,
 }) => {
-    const [isCommnets, setIsCommnets] = useState(false);
+    const [isComments, setIsComments] = useState(false);
     const dispatch = useDispatch();
     const token = useSelector((state) => state.token);
-    const loggedInUserId = useSelector((state) => state._id);
+    const loggedInUserId = useSelector((state) => state.user._id);
     const isLiked = Boolean(likes[loggedInUserId]);
     const likeCount = Object.keys(likes).length; 
-
+    console.log("user loggedId",loggedInUserId)
     const { palette } = useTheme();
     const main = palette.neutral.main;
     const primary = palette.primary.main;
+
+    console.log("postUserId...",postUserId,)
 
     const patchLike = async () => {
         try {
@@ -47,6 +51,7 @@ export const PostWidget = ({
             });
             const data = await responce.json();
             const updatePost = data.updatePost;
+            console.log("updatepost", updatePost);
             dispatch(setPost({ post: updatePost }));
         } catch (err) {
             console.log({ err: err.message })
@@ -57,8 +62,62 @@ export const PostWidget = ({
         <WidgetsWrapper m='2rem 0'>
             <Friend
                 friendId={postUserId}
-                
+                name={name}
+                subtitle={location}
+                userPicturePath={userPicturePath}
             />
+            <Typography color={main} sx={{mt:"1rem"}}>
+                {description}
+            </Typography>
+            {picturePath && (
+                <img
+                    width='100%'
+                    height='auto'
+                    alt='post'
+                    style={{ borerRadius: "0.75rem", marginTop: "0.75rem" }}
+                    src={`http://localhost:2100/assets/${picturePath}`}
+                />
+            )}
+            <FlexBetween mt='0.25rem'>
+                <FlexBetween gap='1rem'>
+                    {/* this likes section */}
+                    <FlexBetween gap='0.3rem'>
+                        <IconButton onClick={patchLike}>
+                            {isLiked ? (
+                                <FavoriteOutlined sx={{color:primary}} />
+                            ) : (
+                                <FavoriteBorderOutlined/>
+                          )}
+                        </IconButton>
+                        <Typography>{ likeCount}</Typography>
+                    </FlexBetween>
+                    {/* this is comment sections */}
+
+                    <FlexBetween gap='0.3rem'>
+                        <IconButton onClick={()=>setIsComments(!isComments)}>
+                            <ChatBubbleOutlineOutlined/>   
+                        </IconButton>
+                        <Typography>{ comments.length}</Typography>
+                    </FlexBetween>
+
+                </FlexBetween>
+                <IconButton>
+                    <ShareOutlined/>
+                </IconButton>
+            </FlexBetween>
+            {isComments && (
+                <Box mt='0.5rem'>
+                    {comments.map((comment, i) => (
+                        <Box key={`${name}-${i}`}>
+                            <Divider />
+                            <Typography sx={{color:main,m:"0.5rem",pl:"1rem"}}>
+                               {comment}
+                            </Typography>
+                       </Box>
+                    ))}
+                    <Divider />
+                </Box>
+            )}
         </WidgetsWrapper>
     )
 }
