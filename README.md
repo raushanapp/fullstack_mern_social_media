@@ -15,3 +15,14 @@
 # Body-parser
 # Gridfs-stream
 # multer-gridfs-storage
+
+# BACKEND API URL
+# Base URL : 
+https://mern-social-media-p49c.onrender.com
+
+if want use this api simple after
+# For Register 
+ /auth/api/register
+# LogIn
+/auth/login
+
