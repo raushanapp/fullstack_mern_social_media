@@ -2,7 +2,6 @@ import {
     ChatBubbleOutlineOutlined,
     FavoriteBorderOutlined,
     FavoriteOutlined,
-    ShareLocationOutlined,
     ShareOutlined
 } from "@mui/icons-material";
 
@@ -32,12 +31,12 @@ export const PostWidget = ({
     const loggedInUserId = useSelector((state) => state.user._id);
     const isLiked = Boolean(likes[loggedInUserId]);
     const likeCount = Object.keys(likes).length; 
-    console.log("user loggedId",loggedInUserId)
+    // console.log("user loggedId",loggedInUserId)
     const { palette } = useTheme();
     const main = palette.neutral.main;
     const primary = palette.primary.main;
 
-    console.log("postUserId...",postUserId,)
+    // console.log("postUserId...",postUserId,)
 
     const patchLike = async () => {
         try {
@@ -51,7 +50,7 @@ export const PostWidget = ({
             });
             const data = await responce.json();
             const updatePost = data.updatePost;
-            console.log("updatepost", updatePost);
+            // console.log("updatepost", updatePost);
             dispatch(setPost({ post: updatePost }));
         } catch (err) {
             console.log({ err: err.message })

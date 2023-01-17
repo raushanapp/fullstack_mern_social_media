@@ -16,6 +16,7 @@ export const Friend = ({friendId,name,subtitle,userPicturePath}) => {
     const { _id } = useSelector((state) => state.user);
     const token = useSelector((state) => state.token);
     const friends = useSelector((state) => state.user.friends);
+    console.log("friends____",friends)
 
     const { palette } = useTheme();
     const primaryLight = palette.primary.light;
@@ -23,9 +24,9 @@ export const Friend = ({friendId,name,subtitle,userPicturePath}) => {
     const main = palette.neutral.main;
     const medium = palette.neutral.medium;
      
-    console.log("friendId...", friendId);
+    // console.log("friendId...", friendId,"_id",_id);
     const isFriend = friends?.find((friend) => friend._id === friendId);
-    console.log(isFriend,"friend id----")
+    // console.log(isFriend,"friend id----")
 
     const patchFriend = async () => {
         try {
