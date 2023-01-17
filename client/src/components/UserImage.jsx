@@ -11,7 +11,7 @@ export const UserImage = ({ image, size = "60px" }) => {
                 alt='user'
                 height={size}
                 width={size}
-                src={`http://localhost:2100/assets/${image}`}
+                src={`https://mern-social-media-p49c.onrender.com/assets/${image}`}
             />
         </Box>
     );

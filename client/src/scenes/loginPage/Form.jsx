@@ -64,7 +64,7 @@ export const Form = () => {
         formData.append("picturePath", values.picture.name);
 
         const saveduserResponse = await fetch(
-            "http://localhost:2100/auth/api/register",
+            "https://mern-social-media-p49c.onrender.com/auth/api/register",
             {
                 method: "POST",
                 body: formData
@@ -79,7 +79,7 @@ export const Form = () => {
 
     const login = async (values, onSubmitProps) => {
         const loggedInResponse = await fetch(
-            "http://localhost:2100/auth/login",
+            "https://mern-social-media-p49c.onrender.com/auth/login",
             {
                 method: "POST",
                 headers:{"Content-Type":"application/json"},

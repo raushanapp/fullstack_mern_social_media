@@ -25,7 +25,7 @@ export const AdvertWidget = () => {
                 width='100%'
                 height='auto'
                 alt='advert'
-                src='http://localhost:2100/assets/info4.jpeg'
+                src='https://mern-social-media-p49c.onrender.com/assets/info4.jpeg'
                 style={{borderRadius:"0.75rem",margin:"0.75rem 0"}}
             />
             <FlexBetween>

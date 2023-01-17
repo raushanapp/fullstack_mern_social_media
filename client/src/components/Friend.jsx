@@ -30,7 +30,7 @@ export const Friend = ({friendId,name,subtitle,userPicturePath}) => {
 
     const patchFriend = async () => {
         try {
-            const responce = await fetch(`http://localhost:2100/users/${_id}/${friendId}`, {
+            const responce = await fetch(`https://mern-social-media-p49c.onrender.com/users/${_id}/${friendId}`, {
                 method: "PATCH",
                 headers: {
                     Authorization: `Bearer ${token}`,

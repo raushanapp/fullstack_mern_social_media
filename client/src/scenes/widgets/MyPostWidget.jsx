@@ -48,7 +48,7 @@ export const MyPostWidget = ({picturePath}) => {
             formData.append("picturePath", image.name);
         }
         try {
-            const responce = await fetch(`http://localhost:2100/posts`, {
+            const responce = await fetch('https://mern-social-media-p49c.onrender.com/posts', {
                 method: "POST",
                 headers: {
                     Authorization: `Bearer ${token}`
@@ -56,7 +56,7 @@ export const MyPostWidget = ({picturePath}) => {
                 body: formData
             });
             const posts = await responce.json();
-            console.log(posts)
+            console.log(posts,"post...")
             const post = posts.post;
             dispatch(setPosts({ post }));
             setImage(null);

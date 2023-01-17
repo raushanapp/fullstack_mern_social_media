@@ -25,7 +25,7 @@ export const UserWidget = ({ userId, picturePath }) => {
     const getUser = async () => {
         try {
             
-            const response = await fetch(`http://localhost:2100/users/${userId}`, {
+            const response = await fetch(`https://mern-social-media-p49c.onrender.com/users/${userId}`, {
                 method: "GET",
                 headers: {
                     Authorization: `Bearer ${token}`

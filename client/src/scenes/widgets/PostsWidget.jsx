@@ -11,7 +11,7 @@ export const PostsWidget = ({ userId, isProfile = false }) => {
 
     const getPosts = async () => {
         try {
-            const responce = await fetch('http://localhost:2100/posts', {
+            const responce = await fetch('https://mern-social-media-p49c.onrender.com/posts', {
                 method: "GET",
                 headers: {
                     Authorization: `Bearer ${token}`
@@ -28,7 +28,7 @@ export const PostsWidget = ({ userId, isProfile = false }) => {
 
     const getUserPosts = async () => {
         try {
-            const responce = await fetch(`http://localhost:2100/posts/${userId}/posts`, {
+            const responce = await fetch(`https://mern-social-media-p49c.onrender.com/posts/${userId}/posts`, {
                 method: "GET",
                 headers: {
                     Authorization: `Bearer ${token}`

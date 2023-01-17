@@ -40,7 +40,7 @@ export const PostWidget = ({
 
     const patchLike = async () => {
         try {
-            const responce = await fetch(`http://localhost:2100/posts/${postId}/like`, {
+            const responce = await fetch(`https://mern-social-media-p49c.onrender.com/posts/${postId}/like`, {
                 method: "PATCH",
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -74,7 +74,7 @@ export const PostWidget = ({
                     height='auto'
                     alt='post'
                     style={{ borerRadius: "0.75rem", marginTop: "0.75rem" }}
-                    src={`http://localhost:2100/assets/${picturePath}`}
+                    src={`https://mern-social-media-p49c.onrender.com/assets/${picturePath}`}
                 />
             )}
             <FlexBetween mt='0.25rem'>
