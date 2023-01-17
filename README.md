@@ -1,4 +1,11 @@
+# Social Media website
 # fullstack_mern_social_media 
+#About this project.
+this project build myself  with in 15 days  
+ https://social-media-paltform.vercel.app/
+
+
+
 # Backend Part 
 # using Tech   Stack
 # NodeJs
